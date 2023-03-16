@@ -1,0 +1,201 @@
+%% 
+%% Copyright 2019 Elsevier Ltd
+%% 
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% ! ! ! SUBMISSION CHECKLIST ! ! ! %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Please confirm that your submission follows all the requirements of the guidelines, including the submission checklist:
+%% _ Cover letter
+%% _ Highlights
+%% _ Authorship statement
+%% _ The manuscript must be single column and double spaced
+%% _ Reference must be in the author-date format
+%% _ Code availability section 
+%%
+%% *All the manuscripts in disagreement with the guidelines will be desk-rejected without editorial check.
+%%
+%% --------------------------------------
+%%
+%% This file is part of the 'CAS Bundle'.
+%%  
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in 
+%%    http://www.latex-project.org/lppl.txt 
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%%   
+%% The list of all files belonging to the 'CAS Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+%% Template article for cas-dc documentclass for  
+%% double column output.
+ 
+[# if options.two_column #]
+\documentclass[[-options.paper_size-],fleqn,longmktitle]{cas-dc}
+[# else #]
+\documentclass[[-options.paper_size-],fleqn]{cas-sc}
+[# endif #]
+
+\usepackage[authoryear]{natbib}
+\usepackage{graphicx} 
+\usepackage{float}
+\usepackage{algorithm}  
+\usepackage{algpseudocode}
+\usepackage{color}
+\usepackage{setspace}
+\usepackage[nomarkers,figuresonly]{endfloat}
+
+[- IMPORTS -]
+
+\newcommand{\colorComments}{black} 
+ 
+%%%Author definitions
+\def\tsc#1{\csdef{#1}{\textsc{\lowercase{#1}}\xspace}}
+\tsc{WGM}
+\tsc{QE}
+\tsc{EP}
+\tsc{PMS}
+\tsc{BEC}
+\tsc{DE}
+%%%
+
+\usepackage{lineno}
+\linenumbers 
+
+\begin{document}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
+\shorttitle{[-doc.short_title-]}
+\shortauthors{[-doc.authors | join(", ","surname")-]}
+
+\title [mode = title]{[-doc.title-]}
+
+% Author affiliation format
+% \author[1]{Author 1}[type=editor,
+%                         auid=000,bioid=1,orcid=0000-0000-0000-0000]
+% \credit{ Author 1 contribution  }
+
+% \author[2]{Author 2} 
+% \credit{Author 2 contribution }
+
+% \author[3]{Author 3}
+% \credit{Author 3 contribution}
+
+% \address[1]{Author 1 affiliation}
+% \address[2]{Author 2 affiliation}
+% \address[3]{Author 3 affiliation} 
+
+[# for author in doc.authors #]
+[# if loop.index == 1#]
+\author[1]{[-author.name-]}[type=editor, orcid=[-author.orcid-]]
+[# else #]
+\author[[-loop.index-]]{[-author.name-]}[orcid=[-author.orcid-]]
+[# endif #]
+[# if author.roles #]
+\credit{[-author.roles | join(", ")-]}
+[# endif #]
+
+[# endfor #]
+
+[# for author in doc.authors #]
+\address[[-loop.index-]]{[-author.affiliations | join(", ")-]}
+[# endfor #]
+
+
+[# if parts.abstract #]
+\begin{abstract}
+[-parts.abstract-]
+\end{abstract}
+[# endif #]
+
+
+\begin{coverletter}
+
+Dear Editors-in-Chief,
+\newline
+ 
+please find the enclosed manuscript "[-doc.title-]" which we are submitting for exclusive consideration for publication in Computers \& Geosciences. We confirm that the submission follows all the requirements and includes all the items of the submission checklist.  
+\newline
+ 
+The manuscript presents:
+\newline
+[# if parts.cover_letter_description #]
+[-parts.cover_letter_description-]
+[# endif #]
+
+We provide the source codes in a public repository with details listed in the section "Code availability".
+\newline
+
+Thanks for your consideration. 
+\newline
+
+Sincerely,
+\newline
+
+[-doc.authors | join(", ", "name")-]
+
+[# for author in doc.authors #]
+[# if author.corresponding #]
+[-author.name-] [-author.affiliation.value-] [-author.email-]
+[# endif #]
+[# endfor #]
+\newline
+
+\end{coverletter}
+
+% \textbf{Delete before submission:}
+
+% Please confirm that your submission follows all the requirements of the guidelines, including the submission checklist:
+
+% - Cover letter
+% - Highlights
+% - Authorship statement
+% - The manuscript must be single column and double spaced
+% - Reference must be in the author-date format
+% - Code availability section 
+
+% *The manuscripts that do meet the requirement guidelines will be desk-rejected.
+
+[# if parts.highlights #]
+\begin{highlights}
+[-parts.highlights-]
+\end{highlights}
+[# endif #]
+
+[# if doc.keywords #]
+\begin{keywords}
+[-doc.keywords | join(" \\sep ")-]
+\end{keywords}
+[# endif #]
+
+\maketitle 
+
+\printcredits
+
+[# if options.doublespacing #]
+\doublespacing
+[# endif #]
+
+[-CONTENT-]
+
+[# if parts.acknowledgments #]
+\section{Acknowledgments}
+[-parts.acknowledgments-]
+[# endif #]
+
+\newpage
+
+[# if parts.code_availability #]
+\textbf{Code availability section}
+[-parts.code_availability-]
+[# endif #]
+
+\bibliographystyle{cas-model2-names}
+[# if doc.bibliography #]
+\bibliography{[- doc.bibliography | join(", ") -]}
+[# endif #]
+
+\end{document}
+
