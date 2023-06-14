@@ -100,7 +100,9 @@
 [# endfor #]
 
 [# for author in doc.authors #]
-\address[[-loop.index-]]{[-author.affiliations | join(", ")-]}
+[# if author.affiliations #]
+\address[[-loop.index-]]{[-author.affiliations | join(', ', 'value')-]}
+[# endif #]
 [# endfor #]
 
 
