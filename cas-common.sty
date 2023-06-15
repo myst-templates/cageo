@@ -1951,7 +1951,6 @@
   abovefig  .skip_set:N  =  \l_fig_abovefig_skip ,
   belowfig  .skip_set:N  =  \l_fig_belowfig_skip ,
   full      .bool_gset:N =  \g_fig_full_bool ,
-  .unknown:n = { \PackageWarning{cas}{Unknown key in figure environment: '#1'} }
 }
 
 \cs_set:Npn \__reset_fig:
@@ -1971,7 +1970,7 @@
     \__reset_fig: 
     \bool_gset_false:N \g_fig_full_bool
     \dim_set:Nn \l_fig_width_dim { \linewidth }
-    \keys_set:nn { cas / fig } { #1 }
+    % \keys_set:nn { cas / fig } { #1 } % commented out to avoid error when myst passes !htbp, thisnis safe for now as myst will pass any of the other options in the key/value set
     \csxdef{fps@figure}{\l_fig_pos_tl}
     \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
     \cs_set_eq:NN \@makecaption \__make_fig_caption:nn 
@@ -1989,7 +1988,7 @@
   \__reset_fig:
   \bool_gset_true:N \g_fig_full_bool
   \dim_set:Nn \l_fig_width_dim { \FullWidth }
-  \keys_set:nn { cas / fig } { #1 }
+  % \keys_set:nn { cas / fig } { #1 } % commented out to avoid error when myst passes !htbp, thisnis safe for now as myst will pass any of the other options in the key/value set
   \csxdef{fps@figure}{\l_fig_pos_tl}
   \csgdef{figwidth}{\dim_use:N \l_fig_width_dim}
   \cs_set_eq:NN \@makecaption \__make_fig_caption:nn 
