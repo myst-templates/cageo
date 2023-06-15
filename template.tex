@@ -88,12 +88,12 @@
 % \address[3]{Author 3 affiliation} 
 
 [# for author in doc.authors #]
-[# if loop.index == 1#]
+[# if loop.index == 1 #]
 \author[1]{[-author.name-]}[type=editor, orcid=[-author.orcid-]]
 [# else #]
 \author[[-loop.index-]]{[-author.name-]}[orcid=[-author.orcid-]]
 [# endif #]
-[# if author.roles #]
+[# if author.roles and author.roles|length > 1 #]
 \credit{[-author.roles | join(", ")-]}
 [# endif #]
 
