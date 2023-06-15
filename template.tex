@@ -93,7 +93,7 @@
 [# else #]
 \author[[-loop.index-]]{[-author.name-]}[orcid=[-author.orcid-]]
 [# endif #]
-[# if author.roles and author.roles|length > 1 #]
+[# if author.roles and author.roles|length > 0 #]
 \credit{[-author.roles | join(", ")-]}
 [# endif #]
 
