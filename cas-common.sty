@@ -1898,7 +1898,7 @@
   \csxdef{fps@table}{\l_tbl_pos_tl}
   \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
   \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn 
-  \@float{table}
+  \@float{table}[htp]
   \l_tbl_align_tl
   \sffamily\small
 }
@@ -1916,7 +1916,7 @@
     \csxdef{fps@table}{\l_tbl_pos_tl}
     \csgdef{tblwidth}{\dim_use:N \l_tbl_width_dim}
     \cs_set_eq:NN \@makecaption \__make_tbl_caption:nn 
-    \@dblfloat{table}
+    \@dblfloat{table}[htp]
      \l_tbl_align_tl
      \sffamily\small
  %    \leftskip=-\FullWidth
@@ -1951,6 +1951,7 @@
   abovefig  .skip_set:N  =  \l_fig_abovefig_skip ,
   belowfig  .skip_set:N  =  \l_fig_belowfig_skip ,
   full      .bool_gset:N =  \g_fig_full_bool ,
+  .unknown:n = { \PackageWarning{cas}{Unknown key in figure environment: '#1'} }
 }
 
 \cs_set:Npn \__reset_fig:
